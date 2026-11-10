@@ -1,0 +1,10 @@
+{
+  "name": "ootle-receipt-desk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Read-only Ootle transaction receipts, fee reconciliation and portable evidence",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "scripts": { "test": "node --test tests/*.test.mjs", "start": "node serve.mjs", "demo": "node cli.mjs fixtures/fee-only.json" }
+}

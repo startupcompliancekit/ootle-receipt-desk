@@ -1,0 +1,52 @@
+{
+  "schema": "ootle-receipt-desk/v1",
+  "network": "esmeralda",
+  "transactionId": "db856734436b2a682f17c1ed0be8ec4e2ccabdab82c546b5e608f7a451caf7cf",
+  "origin": "saved",
+  "source": "https://ootle-indexer-a.tari.com",
+  "observedAt": "2026-11-10T03:37:15Z",
+  "captureNote": "Public receipt is unmodified. Transaction body/signatures omitted; summary fields preserved. Snapshot, not a new live verification.",
+  "responses": {
+    "info": {
+      "status": 200,
+      "body": {
+        "version": "0.52.0",
+        "network": "esmeralda",
+        "network_byte": 38,
+        "sidechain_id": null,
+        "current_epoch": 12984,
+        "transaction_retention_epochs": 50,
+        "transaction_receipt_retention_epochs": 1000,
+        "event_retention_epochs": 1000,
+        "index_gossiped_transactions": true,
+        "verify_substate_proofs": true,
+        "substate_cache_max_serve_lag_secs": 300,
+        "indexes_all_events": true,
+        "utxo_tombstone_retention_epochs": 504,
+        "utxo_tombstone_horizons": []
+      }
+    },
+    "transaction": {
+      "status": 200,
+      "body": {
+        "transaction": {
+          "transaction_id": "db856734436b2a682f17c1ed0be8ec4e2ccabdab82c546b5e608f7a451caf7cf",
+          "created_at": "2026-11-10 03:23:32.0",
+          "summary": {
+            "outcome": "Commit",
+            "total_fees_paid": 30000,
+            "finalized_at": "2026-11-10 03:23:41.0"
+          },
+          "rejected_reason": null,
+          "source": "gossip"
+        }
+      }
+    },
+    "receipt": {
+      "status": 200,
+      "body": {
+        "receipt": "h4IAgIKCg4IIgdiNgtiDWCABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAVggYmURuUG68p8eEcXhKkjoAP8KSnQj3QYuD9weZ5scC08AWCBbyEalF2A5aNSnkjFEbvejdsPDUw2LsPd0OD9S4VRz0oOCCIHYjYLYg1ggAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQFYIDRVVrL5m4wV/9jgKDrTp4L+iMja+ZdePYjEIraHE+hrAFggX9rPTkNi4cpubjw0/bt97olrMK7YMyd70+xf/kslg9SBgoIIgdiNgtiDWCABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAVgggIIdI+wWqagY5ZwZRijbbHNzTrpsbWVa3ypzg72rCDUAgICFGXUwGXUwGTYTgaaCAYADggKAGQRrggOAGICCBYAZAu6CCIAZNz6CCYADGXUwGTK4WCBqJnTpQphmxK5r72WDz6k8OVbnXuMp60r6KDN001uYLA=="
+      }
+    }
+  }
+}

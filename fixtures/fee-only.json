@@ -1,0 +1,52 @@
+{
+  "schema": "ootle-receipt-desk/v1",
+  "network": "esmeralda",
+  "transactionId": "ab778b1ecf8fa3e1c3e01ce6f4074f93a4aa766e2a930c6c5272a9d32f3df565",
+  "origin": "saved",
+  "source": "https://ootle-indexer-a.tari.com",
+  "observedAt": "2026-11-10T03:37:15Z",
+  "captureNote": "Public receipt is unmodified. Transaction body/signatures omitted; summary fields preserved. Snapshot, not a new live verification.",
+  "responses": {
+    "info": {
+      "status": 200,
+      "body": {
+        "version": "0.52.0",
+        "network": "esmeralda",
+        "network_byte": 38,
+        "sidechain_id": null,
+        "current_epoch": 12984,
+        "transaction_retention_epochs": 50,
+        "transaction_receipt_retention_epochs": 1000,
+        "event_retention_epochs": 1000,
+        "index_gossiped_transactions": true,
+        "verify_substate_proofs": true,
+        "substate_cache_max_serve_lag_secs": 300,
+        "indexes_all_events": true,
+        "utxo_tombstone_retention_epochs": 504,
+        "utxo_tombstone_horizons": []
+      }
+    },
+    "transaction": {
+      "status": 200,
+      "body": {
+        "transaction": {
+          "transaction_id": "ab778b1ecf8fa3e1c3e01ce6f4074f93a4aa766e2a930c6c5272a9d32f3df565",
+          "created_at": "2026-11-10 03:03:31.0",
+          "summary": {
+            "outcome": "FeeIntentCommit",
+            "total_fees_paid": 30151,
+            "finalized_at": "2026-11-10 03:03:41.0"
+          },
+          "rejected_reason": null,
+          "source": "local"
+        }
+      }
+    },
+    "receipt": {
+      "status": 200,
+      "body": {
+        "receipt": "h4IBgIKCg4IIgdiNgtiDWCABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAVgg0D38VsdGm6bBHKxF+GyiYmH+kJly5gC8HKV665vKtEgAWCD0uO6K0vRBEJtSHSjzyxPpyofhq5m5fLa8QDAcKyI3AoOCCIHYjYLYg1ggAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQFYIIgOBBAbtS/GE1ib0rzC/ZJgrm60KBDPHhq6rornzvAVAFggNWx7j9lrtEh6vT1dxr6IlPSYarhIitsriNWBXHcC7QSBgoIIgdiNgtiDWCABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAVgggpa8ihQQv8w8BpL304MD2gfsDg1AsXOrHCRAPfaMDksAgICFGXXHGXXHGQf7gaiCAYAYGIICgBkDa4IDgBkBwoIEgBkC2oIFgBkC7oIGgBiMggiAGWIjggmAEBl1xxkyuFgg76/kBHZpzerDtCbS9wrsEsA2wlXZhUbvW+oS+p5be2E="
+      }
+    }
+  }
+}

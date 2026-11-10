@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Understand an Ootle transaction, distinguish fee-only commits, and reconcile receipts without connecting a wallet.">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://ootle-indexer-a.tari.com; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Ootle Receipt Desk — know what actually committed</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="./" class="brand" aria-label="Receipt Desk home"><span class="mark" aria-hidden="true">r.</span><span>ootle <strong>receipt desk</strong></span></a>
+    <div class="toplinks"><span class="network"><i></i> Esmeralda testnet</span><a href="https://github.com/startupcompliancekit/ootle-receipt-desk" target="_blank" rel="noopener noreferrer">Source ↗</a></div>
+  </header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow">THE TRANSACTION ISN’T THE WHOLE STORY</p><h1>Know what<br><em>actually committed.</em></h1><p class="lede">A fee can be paid while an action fails. Read the receipt, understand the outcome, and keep a clean record.</p></div>
+      <aside class="intro-note"><span class="mini-label">A desk, not a wallet</span><p>No connection.<br>No keys. No transactions.</p><span>Public Ootle data, made readable.</span></aside>
+    </section>
+    <div class="workspace">
+      <aside class="controls">
+        <section class="panel">
+          <div class="section-line"><span class="step">01</span><h2>Open a receipt</h2></div>
+          <form id="lookup-form">
+            <label for="transaction-id">Transaction ID</label>
+            <textarea id="transaction-id" rows="3" placeholder="Paste a 64-character transaction ID" spellcheck="false" autocomplete="off" maxlength="80"></textarea>
+            <button class="primary" type="submit" id="lookup-button">Check live outcome <span>↗</span></button>
+          </form>
+          <p class="fineprint">A live lookup sends this ID to the public Tari indexer. It reports Esmeralda testnet data, not XTM mainnet payments.</p>
+          <div class="divider"><span>or keep it local</span></div>
+          <label class="file-button" for="import-file">↑ Open saved evidence <input id="import-file" type="file" accept=".json,application/json"></label>
+          <p class="fineprint">Receipt Desk JSON · up to 2 MB · parsed in your browser. Importing does not contact the indexer.</p>
+        </section>
+        <section class="panel examples">
+          <div class="section-line"><span class="step">02</span><h2>Try a real example</h2></div>
+          <p>Recorded on Esmeralda, 10 Nov 2026. These are saved network responses.</p>
+          <button class="example" data-demo="fee-only"><span class="example-icon amber">!</span><span><strong>Fee paid, action failed</strong><small>The easy-to-miss outcome</small></span><span>→</span></button>
+          <button class="example" data-demo="transfer"><span class="example-icon green">↗</span><span><strong>Public vault transfer</strong><small>Events and exact fees</small></span><span>→</span></button>
+          <button class="example" data-demo="stealth"><span class="example-icon purple">◈</span><span><strong>Stealth transaction</strong><small>See the limits of public data</small></span><span>→</span></button>
+        </section>
+        <section class="panel recent-panel">
+          <button class="text-button" id="recent-button">Browse 8 recent transactions ↗</button>
+          <p class="fineprint">Fetches a small public sample on demand. The indexer’s recent list is incomplete.</p>
+          <div id="recent-list"></div>
+        </section>
+      </aside>
+      <section class="result-area" aria-label="Receipt analysis">
+        <div id="notice" role="status" aria-live="polite"></div>
+        <div id="empty-state" class="empty-state">
+          <div class="receipt-drawing" aria-hidden="true"><span>RECEIPT</span><i></i><i></i><i></i><b>?</b></div>
+          <p class="eyebrow">START WITH THE EVIDENCE</p><h2>A clearer answer<br>than “transaction sent”.</h2><p>Open a receipt or choose a recorded example.<br>Nothing is fetched until you ask.</p>
+          <button class="primary compact" data-demo="fee-only">Show me the fee-only case →</button>
+        </div>
+        <article id="receipt" class="receipt-paper" hidden>
+          <div class="receipt-top"><span class="eyebrow">TRANSACTION RECEIPT</span><span id="provenance" class="pill"></span></div>
+          <div id="outcome-block" class="outcome"><span id="outcome-icon" aria-hidden="true"></span><div><h2 id="outcome-title"></h2><p id="outcome-explanation"></p></div></div>
+          <div class="id-line"><span>TRANSACTION</span><code id="receipt-id"></code></div>
+          <dl class="facts"><div><dt>Network</dt><dd id="receipt-network"></dd></div><div><dt>Receipt epoch</dt><dd id="receipt-epoch"></dd></div><div><dt>Observed at</dt><dd id="receipt-observed"></dd></div></dl>
+          <section class="fee-section"><div class="section-line"><h3>What the fee receipt says</h3><span>µTARI → TARI</span></div><div class="fee-grid"><div><span>Fee paid</span><strong id="fee-paid">—</strong><small id="fee-raw"></small></div><div><span>Refunded fee budget</span><strong id="fee-refund">—</strong><small>returned to the fee-paying vault</small></div><div><span>Non-refundable overcharge</span><strong id="fee-overcharge">—</strong><small>already included in fee paid</small></div></div></section>
+          <section class="state-section"><h3>Committed state</h3><p id="state-summary"></p><p class="fineprint">Versions and event payloads are evidence of state changes. They are not a balance statement for a named recipient.</p></section>
+          <details id="events-details"><summary>Public events <span id="event-count"></span></summary><div id="events-list"></div></details>
+          <details><summary>Evidence and coverage</summary><p id="assurance"></p><dl id="coverage"></dl><p class="fineprint">An indexer response can be incomplete or wrong. This app does not verify committee signatures, substate proofs, private amounts, or recipient ownership. A 404 is not proof of failure.</p></details>
+          <div id="next-step" class="next-step"></div>
+          <div class="receipt-bottom"><button class="primary compact" id="add-tray">＋ Add to reconciliation</button><button class="text-button" id="recheck">Check this ID live ↗</button></div>
+        </article>
+        <section class="export-panel" id="export-panel" hidden><div><h3>Take the answer with you</h3><p>Summaries exclude IDs, event payloads, signatures and failure details by default.</p></div><label class="check-label"><input type="checkbox" id="include-id"> Include transaction ID in summary / CSV</label><div class="button-row"><button class="secondary" id="download-summary">↓ Summary JSON</button><button class="secondary" id="download-evidence">↓ Evidence JSON</button><button class="secondary" id="print-receipt">Print</button></div><p class="fineprint">Evidence JSON includes the transaction ID and public receipt, including any public event data. Review it before sharing. Local parsing does not authenticate an imported file.</p></section>
+      </section>
+    </div>
+    <section class="tray panel" aria-labelledby="tray-title"><div class="tray-header"><div><p class="eyebrow">YOUR RECONCILIATION</p><h2 id="tray-title">Keep fees and outcomes straight.</h2><p>Add receipts to a temporary tray. Duplicate IDs are rejected; network totals stay separate.</p></div><div class="button-row"><button id="tray-csv" class="secondary" disabled>↓ Export CSV</button><button id="clear-tray" class="text-button">Clear tray</button></div></div><div id="tray-totals"></div><div class="table-scroll"><table><thead><tr><th>Transaction</th><th>Network</th><th>Outcome</th><th>Fee paid (TARI)</th><th><span class="sr-only">Remove</span></th></tr></thead><tbody id="tray-body"><tr class="tray-empty"><td colspan="5">Your tray is empty. Nothing is stored after this page closes.</td></tr></tbody></table></div></section>
+    <section class="principles"><div><span>01 / READ</span><h3>Fees aren’t payment proof.</h3><p>Full commit, fee-only commit, rejection and pending are different outcomes. We keep them different.</p></div><div><span>02 / UNDERSTAND</span><h3>Private stays unknown.</h3><p>Hidden transfer amounts cannot be recovered from a public receipt. We never fill the gap with an estimate.</p></div><div><span>03 / RECONCILE</span><h3>Evidence that travels.</h3><p>Saved receipts work offline. Share a minimal summary or keep the public receipt for later inspection.</p></div></section>
+  </main>
+  <footer><span>Receipt Desk <b>·</b> Independent open-source tool for Tari Ootle</span><span>MIT licensed <b>·</b> Esmeralda MVP <b>·</b> <a href="./docs/format.md">Evidence format</a></span></footer>
+</body>
+</html>
